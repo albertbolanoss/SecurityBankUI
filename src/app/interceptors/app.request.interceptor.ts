@@ -32,10 +32,12 @@ export class XhrInterceptor implements HttpInterceptor {
   return next.handle(xhr).pipe(tap(() => { },
       (err: any) => {
         if (err instanceof HttpErrorResponse) {
-          if (err.status !== 401) {
+          if (err.status === 200) {
+            this.router.navigate(['dashboard']);
+            
+          } else {
             return;
           }
-          this.router.navigate(['dashboard']);
         }
       }));
   }
